@@ -1,6 +1,14 @@
-// brfck_interpreter.cpp : Defines the entry point for the console application.
-//
-
+/*
+Created by Dima Shynkar.
+8/8/2017
+some docs:
+** env - environment structure
+**** arr - array with cells
+**** ind - current cell
+**** nstck - nesting stack, top contains pointer to deepest current nest
+**** nsize - nesting stack size(used to emulate operations)
+**** msize - max size e.g. real size
+*/
 #include "stdafx.h"
 #define CELL_COUNT 30000
 #define DEFAULT_NESTING 15
@@ -19,6 +27,7 @@ env* create_env(size_t size = CELL_COUNT)
 {
 	env* e = (env*)malloc(sizeof(env));
 	e->arr = (char*)malloc(size);
+	memset(e->arr, 0, size);
 	e->ind = 0;
 	e->nstck = (const char**)malloc(sizeof(*e->nstck)*DEFAULT_NESTING);
 	e->nsize = 0;
@@ -83,7 +92,7 @@ void process_script(env* e, const char* script)
 			e->ind--;
 			break;
 		case '.':
-			putchar(e->arr[e->ind]);
+			putchar(e->arr[e->ind] + 1);
 			break;
 		case ',':
 			e->arr[e->ind] = getchar();
@@ -137,15 +146,11 @@ void run_module(env* e, const char* filename)
 	fseek(fptr, 0L, SEEK_END);
 	size_t sz = ftell(fptr);
 	rewind(fptr);
-	char* script = (char*)malloc(sz + 1);
 
+	char* script = (char*)malloc(sz + 1);
 	size_t ind = 0;
-	while (!feof(fptr))
-	{
-		script[ind] = fgetc(fptr);
-		ind++;
-	}
-	script[ind + 1] = '\0';
+	while ((script[ind++] = fgetc(fptr)) != EOF);
+	script[ind] = '\0';
 	process_script(e, script);
 }
 

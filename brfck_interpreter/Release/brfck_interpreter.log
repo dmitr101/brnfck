@@ -1,0 +1,7 @@
+﻿  stdafx.cpp
+  brfck_interpreter.cpp
+  Generating code
+  All 17 functions were compiled because no usable IPDB/IOBJ from previous compilation was found.
+  Finished generating code
+  brfck_interpreter.vcxproj -> D:\self\brfck_interpreter\Release\brfck_interpreter.exe
+  brfck_interpreter.vcxproj -> D:\self\brfck_interpreter\Release\brfck_interpreter.pdb (Full PDB)
