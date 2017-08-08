@@ -97,6 +97,7 @@ void process_script(env* e, const char* script)
 		case ',':
 			e->arr[e->ind] = getchar();
 			break;
+		//TODO: fix f*cking loops
 		case '[':
 		{
 			if (e->arr[e->ind])
